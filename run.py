@@ -1,14 +1,7 @@
-#
-# # create our little application :)
-# app = Flask(__name__)
-# app.config.from_object(__name__)
-#
-
-# if __name__ == '__main__':
-#     app.run()
 import os
 
 from flask import Flask
+from monitoring.threads import MyThread
 from monitoring.views.base import IndexView
 
 app = Flask(__name__, static_folder='static')

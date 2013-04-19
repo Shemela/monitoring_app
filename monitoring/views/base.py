@@ -1,10 +1,10 @@
 from flask import render_template
 from flask.views import View
-import settings
-from urlparse import urljoin
-import gevent
 import urllib2
-import json
+from monitoring.threads import MyThread
+
+COUNTS_THREAD = MyThread()
+COUNTS_THREAD.start()
 
 
 class ListView(View):
@@ -29,28 +29,8 @@ class IndexView(ListView):
     def get_template_name(self):
         return 'hosts_status.html'
 
-    def get_data(self, url, path=None, out_json=False):
-        work_url = urljoin(url, path) if path else url
-        job = gevent.spawn(self.read_url, work_url)
-        gevent.joinall([job], timeout=2)
-        if out_json:
-            return json.loads(job.get())
-        else:
-            return job.get()
-
     def get_objects(self):
-        urls = settings.APP_HOSTS
-        result = {}
-        for url in urls:
-            status = self.get_data(url, '/ping')
-            counters = info = None
-            if status:
-                info = self.get_data(url=url, out_json=True)
-                counters = self.get_data(url, '/counters', out_json=True)
-            result[url] = {'info': info,
-                           'status': status,
-                           'counters': counters}
-        return result
+        return COUNTS_THREAD.counters
 
     def dispatch_request(self):
         context = {'servers': self.get_objects()}

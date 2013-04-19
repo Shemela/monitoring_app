@@ -4,16 +4,25 @@
 <table class="table">
   {% for srv in servers %}
     <tr class="{% if servers[srv].status %}success{% else %}error{% endif %}">
-        <td colspan="3"><strong>{{ srv }}</strong></td>
+        <td colspan="5"><strong>{{ srv }}</strong></td>
     </tr>
-    <tr><td>ver.</td><td>counters</td><td>q.p.s</td></tr>
+    <tr>
+        <td>ver.</td>
+        <td>counters</td>
+        <td>q.p.s</td>
+        <td>min</td>
+        <td>max</td>
+    </tr>
     {% if servers[srv].counters %}
         {% for counter in servers[srv].counters %}
         <tr>
             {% if loop.index == 1 %}
                 <td rowspan="{{ servers[srv].counters|length }}">{{ servers[srv].info['version'] }}</td>
             {% endif %}
-            <td>{{ counter }}</td><td>None</td>
+            <td>{{ counter }}</td>
+            <td>{{ servers[srv].counters[counter]['qps'] }}</td>
+            <td>{{ servers[srv].counters[counter]['min'] }}</td>
+            <td>{{ servers[srv].counters[counter]['max'] }}</td>
         </tr>
         {% endfor %}
     {% endif %}
