@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Server Status</h1>
+<ul>
+{% for srv in servers %}
+        <li class="{% if srv.status %}text-success{% else %}text-error{% endif %}"
+                >{{ srv.url }} {% if srv.status %} - {{ srv.status }}{% else %} - server down{% endif %}</li>
+{% endfor %}
+
+</ul>
+{% endblock %}
