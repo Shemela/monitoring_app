@@ -1,10 +1,10 @@
 from flask import render_template
 from flask.views import View
 import urllib2
-from monitoring.threads import MyThread
+from monitoring.threads import CheckServers
 
-COUNTS_THREAD = MyThread()
-COUNTS_THREAD.start()
+CHECK_SERVERS = CheckServers()
+CHECK_SERVERS.start()
 
 
 class ListView(View):
@@ -30,7 +30,7 @@ class IndexView(ListView):
         return 'hosts_status.html'
 
     def get_objects(self):
-        return COUNTS_THREAD.counters
+        return CHECK_SERVERS.counters
 
     def dispatch_request(self):
         context = {'servers': self.get_objects()}

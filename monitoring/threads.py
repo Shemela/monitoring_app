@@ -4,7 +4,7 @@ from settings import APP_HOSTS, UPDATE_TIME
 import settings
 
 
-class MyThread(threading.Thread):
+class CheckServers(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
@@ -34,10 +34,3 @@ class MyThread(threading.Thread):
 
     def stop(self):
         self.event.set()
-
-{'url': {
-    12: {'count': 473737, 'delta': 1},
-    13: {},
-    14: {},
-    'status': 'OK'
-    }}

@@ -1,7 +1,6 @@
 import os
 
 from flask import Flask
-from monitoring.threads import MyThread
 from monitoring.views.base import IndexView
 
 app = Flask(__name__, static_folder='static')
