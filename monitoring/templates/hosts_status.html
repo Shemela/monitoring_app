@@ -1,11 +1,40 @@
 {% extends "base.html" %}
 {% block body %}
 <h1>Server Status</h1>
-<ul>
-{% for srv in servers %}
-        <li class="{% if srv.status %}text-success{% else %}text-error{% endif %}"
-                >{{ srv.url }} {% if srv.status %} - {{ srv.status }}{% else %} - server down{% endif %}</li>
-{% endfor %}
-
-</ul>
+<table class="table">
+  {% for srv in servers %}
+    <tr class="{% if servers[srv].status %}success{% else %}error{% endif %}">
+        <td colspan="3"><strong>{{ srv }}</strong></td>
+    </tr>
+    <tr><td>ver.</td><td>counters</td><td>q.p.s</td></tr>
+    {% if servers[srv].counters %}
+        {% for counter in servers[srv].counters %}
+        <tr>
+            {% if loop.index == 1 %}
+                <td rowspan="{{ servers[srv].counters|length }}">{{ servers[srv].info['version'] }}</td>
+            {% endif %}
+            <td>{{ counter }}</td><td>284</td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+  {% endfor %}
+</table>
+<script type="text/javascript">
+    $('.success').popover({'title':'Сервер работает',
+        'content': '<span class="text-success">Зеленый</span> - сервер ответил на запрос;<br />' +
+                   '<span class="text-error">Красный</span> - сервер не отвечает.',
+        'html': true,
+        'trigger': 'hover focus',
+        'placement': 'top'
+    })
+    $('.error').popover({'title':'Сервер не отвечает',
+        'content': '<span class="text-success">Зеленый</span> - сервер ответил на запрос;<br />' +
+                   '<span class="text-error">Красный</span> - сервер не отвечает.',
+        'html': true,
+        'trigger': 'hover focus',
+        'placement': 'top'
+    })
+</script>
 {% endblock %}
+
+

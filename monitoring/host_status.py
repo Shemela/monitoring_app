@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -
 from flask import render_template
-from flaskr import app
-
 
 
 def app(environ, start_response):
@@ -10,9 +8,8 @@ def app(environ, start_response):
     data = render_template('monitoring/templates/hosts_status.html')
     status = '200 OK'
     response_headers = [
-        ('Content-type','text/html'),
+        ('Content-type', 'text/html'),
         ('Content-Length', str(len(data)))
     ]
     start_response(status, response_headers)
     return iter([data])
-

@@ -9,8 +9,6 @@
 import os
 
 from flask import Flask
-from jinja2 import PackageLoader
-from monitoring.urls import render_template
 from monitoring.views.base import IndexView
 
 app = Flask(__name__, static_folder='static')
