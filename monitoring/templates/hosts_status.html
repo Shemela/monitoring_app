@@ -13,7 +13,7 @@
             {% if loop.index == 1 %}
                 <td rowspan="{{ servers[srv].counters|length }}">{{ servers[srv].info['version'] }}</td>
             {% endif %}
-            <td>{{ counter }}</td><td>284</td>
+            <td>{{ counter }}</td><td>None</td>
         </tr>
         {% endfor %}
     {% endif %}
